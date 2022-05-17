@@ -2,6 +2,7 @@ package conv
 
 import (
 	"fmt"
+	"gopkg.in/yaml.v2"
 	"strings"
 )
 
@@ -223,4 +224,26 @@ func (oldConf *OldArgusConf) ToNewArgusConf() *NewArgusConf {
 	newConf.Collector.StatefulsetSpec.Template.Spec = oldConf.Collector.Statefulsetspec.Template.Spec
 
 	return newConf
+}
+
+func LoadArgusConf(values string) error {
+	conf := &OldArgusConf{}
+	err := yaml.Unmarshal([]byte(values), conf)
+	if err != nil {
+		return err
+	}
+	marshal, err := yaml.Marshal(*conf)
+	if err != nil {
+		return err
+	}
+	fmt.Println(string(marshal))
+
+	newArgusConf := conf.ToNewArgusConf()
+	bytes, err := yaml.Marshal(newArgusConf)
+	if err != nil {
+		return err
+	}
+	fmt.Println("New Config:")
+	fmt.Println(string(bytes))
+	return nil
 }

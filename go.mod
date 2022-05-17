@@ -2,7 +2,11 @@ module github.com/vkumbhar94/lmc
 
 go 1.18
 
-require github.com/spf13/cobra v1.4.0
+require (
+	github.com/pkg/errors v0.9.1
+	github.com/spf13/cobra v1.4.0
+	gopkg.in/yaml.v2 v2.4.0
+)
 
 require (
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect

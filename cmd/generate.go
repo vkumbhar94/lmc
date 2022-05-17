@@ -7,6 +7,8 @@ package cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/vkumbhar94/lmc/pkg/conv"
+	"github.com/vkumbhar94/lmc/pkg/exec"
 	"os"
 )
 
@@ -15,6 +17,7 @@ var (
 	acf   string
 	cscr  string
 	csccf string
+	ns    string
 )
 
 // generateCmd represents the generate command
@@ -28,10 +31,25 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(ar)
+		execObj := exec.NewProcessExecutor(Verbose)
+		helm := os.Getenv("HELM_BIN")
 		if ar != "" {
-			helm := os.Getenv("HELM_BIN")
-			fmt.Println(helm)
+			out := ""
+			var err error
+			if ns != "" {
+				out, err = execObj.RunProcessAndCaptureOutput(helm, "get", "values", ar, "-n", ns)
+			} else {
+				out, err = execObj.RunProcessAndCaptureOutput(helm, "get", "values", ar)
+			}
+			if err != nil {
+				fmt.Println("error: ", err)
+				return
+			}
+			err = conv.LoadArgusConf(out)
+			if err != nil {
+				fmt.Println("load argus values: ", err, "\n", out)
+				return
+			}
 		}
 	},
 }
@@ -52,4 +70,5 @@ func init() {
 	generateCmd.Flags().StringVar(&cscr, "csc-release", "collectorset-controller", "Collectorset Controller Helm Release Name")
 	generateCmd.Flags().StringVar(&acf, "argus-conf-file", "argus-configuration.yaml", "Argus Configuration Yaml File Path")
 	generateCmd.Flags().StringVar(&csccf, "csc-conf-file", "collectorset-controller-configuration.yaml", "Collectorset Controller Configuration Yaml File Path")
+	generateCmd.Flags().StringVar(&ns, "namespace", "", "Namespace in which release exists")
 }
