@@ -34,6 +34,7 @@ to quickly create a Cobra application.`,
 		execObj := exec.NewProcessExecutor(Verbose)
 		helm := os.Getenv("HELM_BIN")
 		if ar != "" {
+			fmt.Println("## Converting Argus configuration")
 			out := ""
 			var err error
 			if ns != "" {
@@ -48,6 +49,25 @@ to quickly create a Cobra application.`,
 			err = conv.LoadArgusConf(out)
 			if err != nil {
 				fmt.Println("load argus values: ", err, "\n", out)
+				return
+			}
+		}
+		if cscr != "" {
+			fmt.Println("## Converting Collectorset controller configuration")
+			out := ""
+			var err error
+			if ns != "" {
+				out, err = execObj.RunProcessAndCaptureOutput(helm, "get", "values", cscr, "-n", ns)
+			} else {
+				out, err = execObj.RunProcessAndCaptureOutput(helm, "get", "values", cscr)
+			}
+			if err != nil {
+				fmt.Println("error: ", err)
+				return
+			}
+			err = conv.LoadCscConf(out)
+			if err != nil {
+				fmt.Println("load csc values: ", err, "\n", out)
 				return
 			}
 		}
@@ -70,5 +90,5 @@ func init() {
 	generateCmd.Flags().StringVar(&cscr, "csc-release", "collectorset-controller", "Collectorset Controller Helm Release Name")
 	generateCmd.Flags().StringVar(&acf, "argus-conf-file", "argus-configuration.yaml", "Argus Configuration Yaml File Path")
 	generateCmd.Flags().StringVar(&csccf, "csc-conf-file", "collectorset-controller-configuration.yaml", "Collectorset Controller Configuration Yaml File Path")
-	generateCmd.Flags().StringVar(&ns, "namespace", "", "Namespace in which release exists")
+	generateCmd.Flags().StringVarP(&ns, "namespace", "n", "", "Namespace in which release exists")
 }

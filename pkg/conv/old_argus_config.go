@@ -243,7 +243,7 @@ func LoadArgusConf(values string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("New Config:")
+	fmt.Println("New Argus Config:")
 	fmt.Println(string(bytes))
 	return nil
 }
