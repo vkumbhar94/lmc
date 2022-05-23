@@ -32,120 +32,120 @@ func (is *intOrString) UnmarshalYAML(
 }
 
 type OldArgusConf struct {
-	AccessID           string `yaml:"accessID,omitempty"`
-	AccessKey          string `yaml:"accessKey,omitempty"`
-	Account            string `yaml:"account,omitempty"`
-	ClusterName        string `yaml:"clusterName,omitempty"`
-	LogLevel           string `yaml:"logLevel,omitempty"`
-	DeleteDevices      bool   `yaml:"deleteDevices,omitempty"`
-	DisableAlerting    bool   `yaml:"disableAlerting,omitempty"`
-	EnableRBAC         bool   `yaml:"enableRBAC,omitempty"`
-	ClusterGroupID     int    `yaml:"clusterGroupID,omitempty"`
-	ResourceGroupID    int    `yaml:"resourceGroupID,omitempty"`
-	EtcdDiscoveryToken string `yaml:"etcdDiscoveryToken,omitempty"`
-	ImageRepository    string `yaml:"imageRepository,omitempty"`
-	ImageTag           string `yaml:"imageTag,omitempty"`
-	ImagePullPolicy    string `yaml:"imagePullPolicy,omitempty"`
-	ProxyURL           string `yaml:"proxyURL,omitempty"`
-	ProxyUser          string `yaml:"proxyUser,omitempty"`
-	ProxyPass          string `yaml:"proxyPass,omitempty"`
+	AccessID           string `yaml:"accessID,omitempty" json:"accessID,omitempty"`
+	AccessKey          string `yaml:"accessKey,omitempty" json:"accessKey,omitempty"`
+	Account            string `yaml:"account,omitempty" json:"account,omitempty"`
+	ClusterName        string `yaml:"clusterName,omitempty" json:"clusterName,omitempty"`
+	LogLevel           string `yaml:"logLevel,omitempty" json:"logLevel,omitempty"`
+	DeleteDevices      bool   `yaml:"deleteDevices,omitempty" json:"deleteDevices,omitempty"`
+	DisableAlerting    bool   `yaml:"disableAlerting,omitempty" json:"disableAlerting,omitempty"`
+	EnableRBAC         bool   `yaml:"enableRBAC,omitempty" json:"enableRBAC,omitempty"`
+	ClusterGroupID     int    `yaml:"clusterGroupID,omitempty" json:"clusterGroupID,omitempty"`
+	ResourceGroupID    int    `yaml:"resourceGroupID,omitempty" json:"resourceGroupID,omitempty"`
+	EtcdDiscoveryToken string `yaml:"etcdDiscoveryToken,omitempty" json:"etcdDiscoveryToken,omitempty"`
+	ImageRepository    string `yaml:"imageRepository,omitempty" json:"imageRepository,omitempty"`
+	ImageTag           string `yaml:"imageTag,omitempty" json:"imageTag,omitempty"`
+	ImagePullPolicy    string `yaml:"imagePullPolicy,omitempty" json:"imagePullPolicy,omitempty"`
+	ProxyURL           string `yaml:"proxyURL,omitempty" json:"proxyURL,omitempty"`
+	ProxyUser          string `yaml:"proxyUser,omitempty" json:"proxyUser,omitempty"`
+	ProxyPass          string `yaml:"proxyPass,omitempty" json:"proxyPass,omitempty"`
 	NodeSelector       struct {
-	} `yaml:"nodeSelector,omitempty"`
+	} `yaml:"nodeSelector,omitempty" json:"nodeSelector,omitempty"`
 	Affinity struct {
-	} `yaml:"affinity,omitempty"`
-	PriorityClassName string        `yaml:"priorityClassName,omitempty"`
-	Tolerations       []interface{} `yaml:"tolerations,omitempty"`
+	} `yaml:"affinity,omitempty" json:"affinity,omitempty"`
+	PriorityClassName string        `yaml:"priorityClassName,omitempty" json:"priorityClassName,omitempty"`
+	Tolerations       []interface{} `yaml:"tolerations,omitempty" json:"tolerations,omitempty"`
 	Labels            struct {
-	} `yaml:"labels,omitempty"`
+	} `yaml:"labels,omitempty" json:"labels,omitempty"`
 	Annotations struct {
-	} `yaml:"annotations,omitempty"`
-	IgnoreSsl             bool `yaml:"ignore_ssl,omitempty"`
-	RegisterGenericFilter bool `yaml:"registerGenericFilter,omitempty"`
+	} `yaml:"annotations,omitempty" json:"annotations,omitempty"`
+	IgnoreSsl             bool `yaml:"ignore_ssl,omitempty" json:"ignore_ssl,omitempty"`
+	RegisterGenericFilter bool `yaml:"registerGenericFilter,omitempty" json:"registerGenericFilter,omitempty"`
 	AppIntervals          struct {
-		PeriodicSyncInterval   string `yaml:"periodic_sync_interval,omitempty"`
-		PeriodicDeleteInterval string `yaml:"periodic_delete_interval,omitempty"`
-		CacheSyncInterval      string `yaml:"cache_sync_interval,omitempty"`
-	} `yaml:"app_intervals,omitempty"`
+		PeriodicSyncInterval   string `yaml:"periodic_sync_interval,omitempty" json:"periodic_sync_interval,omitempty"`
+		PeriodicDeleteInterval string `yaml:"periodic_delete_interval,omitempty" json:"periodic_delete_interval,omitempty"`
+		CacheSyncInterval      string `yaml:"cache_sync_interval,omitempty" json:"cache_sync_interval,omitempty"`
+	} `yaml:"app_intervals,omitempty" json:"app_intervals,omitempty"`
 	DeviceGroupProps struct {
 		Cluster []struct {
-			Name     string `yaml:"name,omitempty"`
-			Value    string `yaml:"value,omitempty"`
-			Override bool   `yaml:"override,omitempty"`
-		} `yaml:"cluster,omitempty"`
+			Name     string `yaml:"name,omitempty" json:"name,omitempty"`
+			Value    string `yaml:"value,omitempty" json:"value,omitempty"`
+			Override bool   `yaml:"override,omitempty" json:"override,omitempty"`
+		} `yaml:"cluster,omitempty" json:"cluster,omitempty"`
 		Pods []struct {
-			Name     string `yaml:"name,omitempty"`
-			Value    string `yaml:"value,omitempty"`
-			Override bool   `yaml:"override,omitempty"`
-		} `yaml:"pods,omitempty"`
+			Name     string `yaml:"name,omitempty" json:"name,omitempty"`
+			Value    string `yaml:"value,omitempty" json:"value,omitempty"`
+			Override bool   `yaml:"override,omitempty" json:"override,omitempty"`
+		} `yaml:"pods,omitempty" json:"pods,omitempty"`
 		Services []struct {
-			Name     string `yaml:"name,omitempty"`
-			Value    string `yaml:"value,omitempty"`
-			Override bool   `yaml:"override,omitempty"`
-		} `yaml:"services,omitempty"`
+			Name     string `yaml:"name,omitempty" json:"name,omitempty"`
+			Value    string `yaml:"value,omitempty" json:"value,omitempty"`
+			Override bool   `yaml:"override,omitempty" json:"override,omitempty"`
+		} `yaml:"services,omitempty" json:"services,omitempty"`
 		Deployments []struct {
-			Name     string `yaml:"name,omitempty"`
-			Value    string `yaml:"value,omitempty"`
-			Override bool   `yaml:"override,omitempty"`
-		} `yaml:"deployments,omitempty"`
+			Name     string `yaml:"name,omitempty" json:"name,omitempty"`
+			Value    string `yaml:"value,omitempty" json:"value,omitempty"`
+			Override bool   `yaml:"override,omitempty" json:"override,omitempty"`
+		} `yaml:"deployments,omitempty" json:"deployments,omitempty"`
 		Nodes []struct {
-			Name     string `yaml:"name,omitempty"`
-			Value    string `yaml:"value,omitempty"`
-			Override bool   `yaml:"override,omitempty"`
-		} `yaml:"nodes,omitempty"`
+			Name     string `yaml:"name,omitempty" json:"name,omitempty"`
+			Value    string `yaml:"value,omitempty" json:"value,omitempty"`
+			Override bool   `yaml:"override,omitempty" json:"override,omitempty"`
+		} `yaml:"nodes,omitempty" json:"nodes,omitempty"`
 		Etcd []struct {
-			Name     string `yaml:"name,omitempty"`
-			Value    string `yaml:"value,omitempty"`
-			Override bool   `yaml:"override,omitempty"`
-		} `yaml:"etcd,omitempty"`
+			Name     string `yaml:"name,omitempty" json:"name,omitempty"`
+			Value    string `yaml:"value,omitempty" json:"value,omitempty"`
+			Override bool   `yaml:"override,omitempty" json:"override,omitempty"`
+		} `yaml:"etcd,omitempty" json:"etcd,omitempty"`
 		Hpas []struct {
-			Name     string `yaml:"name,omitempty"`
-			Value    string `yaml:"value,omitempty"`
-			Override bool   `yaml:"override,omitempty"`
-		} `yaml:"hpas,omitempty"`
-	} `yaml:"device_group_props,omitempty"`
-	Filters     map[string]any `yaml:"filters,omitempty"`
+			Name     string `yaml:"name,omitempty" json:"name,omitempty"`
+			Value    string `yaml:"value,omitempty" json:"value,omitempty"`
+			Override bool   `yaml:"override,omitempty" json:"override,omitempty"`
+		} `yaml:"hpas,omitempty" json:"hpas,omitempty"`
+	} `yaml:"device_group_props,omitempty" json:"device_group_props,omitempty"`
+	Filters     map[string]any `yaml:"filters,omitempty" json:"filters,omitempty"`
 	Openmetrics struct {
-		Port int `yaml:"port,omitempty"`
-	} `yaml:"openmetrics,omitempty"`
+		Port int `yaml:"port,omitempty" json:"port,omitempty"`
+	} `yaml:"openmetrics,omitempty" json:"openmetrics,omitempty"`
 	Collector struct {
-		Replicas          intOrString `yaml:"replicas,omitempty"`
-		Size              string      `yaml:"size,omitempty"`
-		ImageRepository   string      `yaml:"imageRepository,omitempty"`
-		ImageTag          string      `yaml:"imageTag,omitempty"`
-		ImagePullPolicy   string      `yaml:"imagePullPolicy,omitempty"`
-		SecretName        string      `yaml:"secretName,omitempty"`
-		GroupID           int         `yaml:"groupID,omitempty"`
-		EscalationChainID intOrString `yaml:"escalationChainID,omitempty"`
-		CollectorVersion  int         `yaml:"collectorVersion,omitempty"`
-		UseEA             bool        `yaml:"useEA,omitempty"`
-		ProxyURL          string      `yaml:"proxyURL,omitempty"`
-		ProxyUser         string      `yaml:"proxyUser,omitempty"`
-		ProxyPass         string      `yaml:"proxyPass,omitempty"`
+		Replicas          intOrString `yaml:"replicas,omitempty" json:"replicas,omitempty"`
+		Size              string      `yaml:"size,omitempty" json:"size,omitempty"`
+		ImageRepository   string      `yaml:"imageRepository,omitempty" json:"imageRepository,omitempty"`
+		ImageTag          string      `yaml:"imageTag,omitempty" json:"imageTag,omitempty"`
+		ImagePullPolicy   string      `yaml:"imagePullPolicy,omitempty" json:"imagePullPolicy,omitempty"`
+		SecretName        string      `yaml:"secretName,omitempty" json:"secretName,omitempty"`
+		GroupID           int         `yaml:"groupID,omitempty" json:"groupID,omitempty"`
+		EscalationChainID intOrString `yaml:"escalationChainID,omitempty" json:"escalationChainID,omitempty"`
+		CollectorVersion  int         `yaml:"collectorVersion,omitempty" json:"collectorVersion,omitempty"`
+		UseEA             bool        `yaml:"useEA,omitempty" json:"useEA,omitempty"`
+		ProxyURL          string      `yaml:"proxyURL,omitempty" json:"proxyURL,omitempty"`
+		ProxyUser         string      `yaml:"proxyUser,omitempty" json:"proxyUser,omitempty"`
+		ProxyPass         string      `yaml:"proxyPass,omitempty" json:"proxyPass,omitempty"`
 		Annotations       struct {
-		} `yaml:"annotations,omitempty"`
+		} `yaml:"annotations,omitempty" json:"annotations,omitempty"`
 		Labels struct {
-		} `yaml:"labels,omitempty"`
+		} `yaml:"labels,omitempty" json:"labels,omitempty"`
 		Statefulsetspec struct {
 			Template struct {
 				Spec struct {
-				} `yaml:"spec,omitempty"`
-			} `yaml:"template,omitempty"`
-		} `yaml:"statefulsetspec,omitempty"`
-	} `yaml:"collector,omitempty"`
-	DisableResourceMonitoring []string `yaml:"disableResourceMonitoring,omitempty"`
-	DisableResourceAlerting   []string `yaml:"disableResourceAlerting,omitempty"`
-	Replicas                  int      `yaml:"replicas,omitempty"`
+				} `yaml:"spec,omitempty" json:"spec,omitempty"`
+			} `yaml:"template,omitempty" json:"template,omitempty"`
+		} `yaml:"statefulsetspec,omitempty" json:"statefulsetspec,omitempty"`
+	} `yaml:"collector,omitempty" json:"collector,omitempty"`
+	DisableResourceMonitoring []string `yaml:"disableResourceMonitoring,omitempty" json:"disableResourceMonitoring,omitempty"`
+	DisableResourceAlerting   []string `yaml:"disableResourceAlerting,omitempty" json:"disableResourceAlerting,omitempty"`
+	Replicas                  int      `yaml:"replicas,omitempty" json:"replicas,omitempty"`
 	KubeStateMetrics          struct {
-		Enabled     bool `yaml:"enabled,omitempty"`
-		Replicas    int  `yaml:"replicas,omitempty"`
+		Enabled     bool `yaml:"enabled,omitempty" json:"enabled,omitempty"`
+		Replicas    int  `yaml:"replicas,omitempty" json:"replicas,omitempty"`
 		SelfMonitor struct {
-			Enabled       bool `yaml:"enabled,omitempty"`
-			TelemetryPort int  `yaml:"telemetryPort,omitempty"`
-		} `yaml:"selfMonitor,omitempty"`
-		Collectors []string `yaml:"collectors,omitempty"`
-	} `yaml:"kube-state-metrics,omitempty"`
+			Enabled       bool `yaml:"enabled,omitempty" json:"enabled,omitempty"`
+			TelemetryPort int  `yaml:"telemetryPort,omitempty" json:"telemetryPort,omitempty"`
+		} `yaml:"selfMonitor,omitempty" json:"selfMonitor,omitempty"`
+		Collectors []string `yaml:"collectors,omitempty" json:"collectors,omitempty"`
+	} `yaml:"kube-state-metrics,omitempty" json:"kube-state-metrics,omitempty"`
 	Resources struct {
-	} `yaml:"resources,omitempty"`
+	} `yaml:"resources,omitempty" json:"resources,omitempty"`
 }
 
 func (oldConf *OldArgusConf) ToNewArgusConf() *NewArgusConf {

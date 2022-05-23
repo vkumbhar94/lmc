@@ -5,25 +5,25 @@ import (
 )
 
 type OldCscConf struct {
-	AccessID           string            `yaml:"accessID,omitempty"`
-	AccessKey          string            `yaml:"accessKey,omitempty"`
-	Account            string            `yaml:"account,omitempty"`
-	Debug              bool              `yaml:"debug,omitempty"`
-	EnableRBAC         bool              `yaml:"enableRBAC,omitempty"`
-	EtcdDiscoveryToken string            `yaml:"etcdDiscoveryToken,omitempty"`
-	ImageRepository    string            `yaml:"imageRepository,omitempty"`
-	ImageTag           string            `yaml:"imageTag,omitempty"`
-	ImagePullPolicy    string            `yaml:"imagePullPolicy,omitempty"`
-	ProxyURL           string            `yaml:"proxyURL,omitempty"`
-	ProxyUser          string            `yaml:"proxyUser,omitempty"`
-	ProxyPass          string            `yaml:"proxyPass,omitempty"`
-	NodeSelector       map[string]any    `yaml:"nodeSelector,omitempty"`
-	Affinity           map[string]any    `yaml:"affinity,omitempty"`
-	PriorityClassName  string            `yaml:"priorityClassName,omitempty"`
-	Tolerations        []map[string]any  `yaml:"tolerations,omitempty"`
-	Labels             map[string]string `yaml:"labels,omitempty"`
-	Annotations        map[string]string `yaml:"annotations,omitempty"`
-	IgnoreSsl          bool              `yaml:"ignore_ssl,omitempty"`
+	AccessID           string            `yaml:"accessID,omitempty" json:"accessID,omitempty"`
+	AccessKey          string            `yaml:"accessKey,omitempty" json:"accessKey,omitempty"`
+	Account            string            `yaml:"account,omitempty" json:"account,omitempty"`
+	Debug              bool              `yaml:"debug,omitempty" json:"debug,omitempty"`
+	EnableRBAC         bool              `yaml:"enableRBAC,omitempty" json:"enableRBAC,omitempty"`
+	EtcdDiscoveryToken string            `yaml:"etcdDiscoveryToken,omitempty" json:"etcdDiscoveryToken,omitempty"`
+	ImageRepository    string            `yaml:"imageRepository,omitempty" json:"imageRepository,omitempty"`
+	ImageTag           string            `yaml:"imageTag,omitempty" json:"imageTag,omitempty"`
+	ImagePullPolicy    string            `yaml:"imagePullPolicy,omitempty" json:"imagePullPolicy,omitempty"`
+	ProxyURL           string            `yaml:"proxyURL,omitempty" json:"proxyURL,omitempty"`
+	ProxyUser          string            `yaml:"proxyUser,omitempty" json:"proxyUser,omitempty"`
+	ProxyPass          string            `yaml:"proxyPass,omitempty" json:"proxyPass,omitempty"`
+	NodeSelector       map[string]any    `yaml:"nodeSelector,omitempty" json:"nodeSelector,omitempty"`
+	Affinity           map[string]any    `yaml:"affinity,omitempty" json:"affinity,omitempty"`
+	PriorityClassName  string            `yaml:"priorityClassName,omitempty" json:"priorityClassName,omitempty"`
+	Tolerations        []map[string]any  `yaml:"tolerations,omitempty" json:"tolerations,omitempty"`
+	Labels             map[string]string `yaml:"labels,omitempty" json:"labels,omitempty"`
+	Annotations        map[string]string `yaml:"annotations,omitempty" json:"annotations,omitempty"`
+	IgnoreSsl          bool              `yaml:"ignore_ssl,omitempty" json:"ignore_ssl,omitempty"`
 }
 
 func (oldConf *OldCscConf) ToNewCscConf() *NewCscConf {

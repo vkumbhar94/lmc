@@ -5,26 +5,26 @@ import (
 )
 
 type Global struct {
-	AccessID  string `yaml:"accessID,omitempty"`
-	AccessKey string `yaml:"accessKey,omitempty"`
-	Account   string `yaml:"account,omitempty"`
+	AccessID  string `yaml:"accessID,omitempty" json:"accessID,omitempty"`
+	AccessKey string `yaml:"accessKey,omitempty" json:"accessKey,omitempty"`
+	Account   string `yaml:"account,omitempty" json:"account,omitempty"`
 	Image     struct {
-		Registry   string `yaml:"registry,omitempty"`
-		Repository string `yaml:"repository,omitempty"`
-		PullPolicy string `yaml:"pullPolicy,omitempty"`
-		Tag        string `yaml:"tag,omitempty"`
-	} `yaml:"image,omitempty"`
+		Registry   string `yaml:"registry,omitempty" json:"registry,omitempty"`
+		Repository string `yaml:"repository,omitempty" json:"repository,omitempty"`
+		PullPolicy string `yaml:"pullPolicy,omitempty" json:"pullPolicy,omitempty"`
+		Tag        string `yaml:"tag,omitempty" json:"tag,omitempty"`
+	} `yaml:"image,omitempty" json:"image,omitempty"`
 	Proxy struct {
-		URL  string `yaml:"url,omitempty"`
-		User string `yaml:"user,omitempty"`
-		Pass string `yaml:"pass,omitempty"`
-	} `yaml:"proxy,omitempty"`
+		URL  string `yaml:"url,omitempty" json:"url,omitempty"`
+		User string `yaml:"user,omitempty" json:"user,omitempty"`
+		Pass string `yaml:"pass,omitempty" json:"pass,omitempty"`
+	} `yaml:"proxy,omitempty" json:"proxy,omitempty"`
 }
 
 type LMCConf struct {
-	Argus                  *conv.NewArgusConf `yaml:"argus,omitempty"`
-	CollectorsetController *conv.NewCscConf   `yaml:"collectorset-controller,omitempty"`
-	Global                 *Global            `yaml:"global,omitempty"`
+	Argus                  *conv.NewArgusConf `yaml:"argus,omitempty" json:"argus,omitempty"`
+	CollectorsetController *conv.NewCscConf   `yaml:"collectorset-controller,omitempty" json:"collectorset-controller,omitempty"`
+	Global                 *Global            `yaml:"global,omitempty" json:"global,omitempty"`
 }
 
 func (lmc *LMCConf) combine() {
