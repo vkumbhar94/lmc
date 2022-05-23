@@ -130,7 +130,6 @@ to quickly create a Cobra application.`,
 		filePath := FilePath
 		if output == Json {
 			filePath = strings.Replace(filePath, ".yaml", ".json", -1)
-			cmd.Println(filePath)
 		}
 		util.PrintlnRunning(cmd, fmt.Sprintf("Storing generated LM Container configuration to file %s", filePath))
 		err = ioutil.WriteFile(filePath, marshal, fs.ModePerm)
