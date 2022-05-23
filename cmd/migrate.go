@@ -15,6 +15,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/fs"
 	"io/ioutil"
+	"strings"
 )
 
 var (
@@ -120,20 +121,24 @@ to quickly create a Cobra application.`,
 				util.PrintlnFailed(cmd, fmt.Sprintf("Marshal LM Container Configuration failed: %s", err))
 			}
 		} else if output == Json {
-			marshal, err = json.Marshal(lmcConfig)
+			marshal, err = json.MarshalIndent(lmcConfig, "", "  ")
 			if err != nil {
 				util.PrintlnFailed(cmd, fmt.Sprintf("Marshal LM Container Configuration failed: %s", err))
 			}
 		}
 
-		util.PrintlnRunning(cmd, fmt.Sprintf("Storing generated LM Container configuration to file %s", FilePath))
-
-		err = ioutil.WriteFile(FilePath, marshal, fs.ModePerm)
+		filePath := FilePath
+		if output == Json {
+			filePath = strings.Replace(filePath, ".yaml", ".json", -1)
+			cmd.Println(filePath)
+		}
+		util.PrintlnRunning(cmd, fmt.Sprintf("Storing generated LM Container configuration to file %s", filePath))
+		err = ioutil.WriteFile(filePath, marshal, fs.ModePerm)
 		if err != nil {
 			util.PrintlnFailed(cmd, fmt.Sprintf("Failed to write generated configuration to file: %s", err))
 			return
 		}
-		util.PrintlnSuccess(cmd, fmt.Sprintf("Stored generated LM Container configuration to file %s", FilePath))
+		util.PrintlnSuccess(cmd, fmt.Sprintf("Stored generated LM Container configuration to file %s", filePath))
 	},
 }
 
