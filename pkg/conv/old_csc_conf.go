@@ -1,7 +1,6 @@
 package conv
 
 import (
-	"fmt"
 	"gopkg.in/yaml.v2"
 )
 
@@ -54,24 +53,11 @@ func (oldConf *OldCscConf) ToNewCscConf() *NewCscConf {
 	return newCscConf
 }
 
-func LoadCscConf(values string) error {
+func UnmarshalCscConf(values string) (*OldCscConf, error) {
 	conf := &OldCscConf{}
 	err := yaml.Unmarshal([]byte(values), conf)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	marshal, err := yaml.Marshal(*conf)
-	if err != nil {
-		return err
-	}
-	fmt.Println(string(marshal))
-
-	newArgusConf := conf.ToNewCscConf()
-	bytes, err := yaml.Marshal(newArgusConf)
-	if err != nil {
-		return err
-	}
-	fmt.Println("New CSC Config:")
-	fmt.Println(string(bytes))
-	return nil
+	return conf, nil
 }

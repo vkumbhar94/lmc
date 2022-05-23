@@ -20,6 +20,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 }
 
+var FilePath string
+
 func init() {
 	rootCmd.AddCommand(configCmd)
 
@@ -32,4 +34,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// configCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	configCmd.PersistentFlags().StringVarP(&FilePath, "file", "f", "lmc-configuration.yaml", "LM Container Configuration FilePath")
 }

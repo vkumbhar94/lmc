@@ -4,6 +4,10 @@ archives:
       amd64: x86_64
       darwin: Darwin
       linux: Linux
+    files:
+      - LICENSE
+      - README.md
+      - completion.yaml
 builds:
   - main: ./
     goos:

@@ -3,10 +3,22 @@ package util
 import (
 	"errors"
 	"fmt"
+	"github.com/spf13/cobra"
+	"github.com/vkumbhar94/lmc/pkg/icon"
+	"gopkg.in/yaml.v2"
 	"net"
 	"os"
 )
 
+var Debug = false
+var Quiet = false
+
+func SetDebug(b bool) {
+	Debug = b
+}
+func SetQuiet(b bool) {
+	Quiet = b
+}
 func Flatten(items []interface{}) ([]string, error) {
 	return doFlatten([]string{}, items)
 }
@@ -57,4 +69,40 @@ func GetRandomPort() (int, error) {
 	}
 
 	return listener.Addr().(*net.TCPAddr).Port, nil
+}
+
+func printlnConfig(prefix string, cmd *cobra.Command, out interface{}) {
+	marshal, err := yaml.Marshal(out)
+	if err != nil {
+		cmd.PrintErrln(err)
+	}
+	cmd.Printf("\n%s\n%v\n", prefix, string(marshal))
+}
+func PrintlnDebug(cmd *cobra.Command, msg string) {
+	if Debug {
+		cmd.Println(msg)
+	}
+
+}
+func PrintlnDebugConfig(cmd *cobra.Command, prefix string, out interface{}) {
+	if Debug {
+		printlnConfig(prefix, cmd, out)
+	}
+}
+
+func printf(cmd *cobra.Command, msg string, ic icon.Icon) {
+	cmd.Printf("\n%s %s\n", ic, msg)
+}
+func PrintlnSuccess(cmd *cobra.Command, msg string) {
+	if !Quiet {
+		printf(cmd, msg, icon.SuccessTick)
+	}
+}
+func PrintlnFailed(cmd *cobra.Command, msg string) {
+	printf(cmd, msg, icon.FailedCross)
+}
+func PrintlnRunning(cmd *cobra.Command, msg string) {
+	if !Quiet {
+		printf(cmd, msg, icon.RoundStar)
+	}
 }

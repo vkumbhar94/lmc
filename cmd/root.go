@@ -6,9 +6,14 @@ Copyright © 2022 vkumbhar94 vkumbhar94@gmail.com
 */
 
 import (
-	"os"
-
+	"errors"
+	"github.com/kelseyhightower/envconfig"
 	"github.com/spf13/cobra"
+	"os"
+)
+
+var (
+	HelmConfigObj = HelmConfig{}
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -35,7 +40,7 @@ func Execute() {
 	}
 }
 
-var Verbose = false
+var Quiet bool
 
 func init() {
 	// Here you will define your flags and configuration settings.
@@ -46,5 +51,58 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
+	err := envconfig.Process("HELM", &HelmConfigObj)
+	if err != nil {
+		return
+	}
+
+	rootCmd.PersistentFlags().BoolVarP(&Quiet, "quiet", "q", false, "Stop informative message on stdout")
+	//fmt.Println(HelmConfigObj)
+}
+
+type HelmConfig struct {
+	DEBUG             bool   `envconfig:"DEBUG"`
+	PLUGINS           string `envconfig:"PLUGINS"`
+	PLUGIN_NAME       string `envconfig:"PLUGIN_NAME"`
+	PLUGIN_DIR        string `envconfig:"PLUGIN_DIR"`
+	BIN               string `envconfig:"BIN"`
+	REGISTRY_CONFIG   string `envconfig:"REGISTRY_CONFIG"`
+	REPOSITORY_CACHE  string `envconfig:"REPOSITORY_CACHE"`
+	REPOSITORY_CONFIG string `envconfig:"REPOSITORY_CONFIG"`
+	NAMESPACE         string `envconfig:"NAMESPACE"`
+	KUBECONTEXT       string `envconfig:"KUBECONTEXT"`
+}
+
+type OutputFormat int
+
+const (
+	Yaml OutputFormat = iota
+	Json
+)
+
+func (of *OutputFormat) String() string {
+	switch *of {
+	case Yaml:
+		return "yaml"
+	case Json:
+		return "json"
+	}
+	return ""
+}
+
+func (of *OutputFormat) Set(v string) error {
+	switch v {
+	case "json":
+		*of = Json
+	case "yaml":
+		*of = Yaml
+	default:
+		return errors.New(`must be one of "yaml", or "json". ( Default: yaml ) `)
+	}
+	return nil
+}
+
+// Type is only used in help text
+func (of *OutputFormat) Type() string {
+	return "OutputFormat"
 }

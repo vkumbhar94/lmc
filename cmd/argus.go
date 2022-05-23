@@ -12,8 +12,9 @@ import (
 
 // argusCmd represents the argus command
 var argusCmd = &cobra.Command{
-	Use:   "argus",
-	Short: "A brief description of your command",
+	Use:    "argus",
+	Hidden: true,
+	Short:  "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 

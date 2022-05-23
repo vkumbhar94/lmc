@@ -3,8 +3,33 @@ package conv
 import (
 	"fmt"
 	"gopkg.in/yaml.v2"
+	"strconv"
 	"strings"
 )
+
+type intOrString int
+
+func (is intOrString) MarshalText() ([]byte, error) {
+	return []byte(strconv.Itoa(int(is))), nil
+}
+
+func (is *intOrString) UnmarshalYAML(
+	unmarshal func(interface{}) error,
+) error {
+	var i int
+	if err := unmarshal(&i); err == nil {
+		*is = intOrString(i)
+		return nil
+	}
+	var st string
+	err := unmarshal(&st)
+	if err == nil {
+		i, err = strconv.Atoi(strings.Trim(strings.Trim(strings.TrimSpace(st), `"`), "'"))
+		*is = intOrString(i)
+		return nil
+	}
+	return err
+}
 
 type OldArgusConf struct {
 	AccessID           string `yaml:"accessID,omitempty"`
@@ -83,19 +108,19 @@ type OldArgusConf struct {
 		Port int `yaml:"port,omitempty"`
 	} `yaml:"openmetrics,omitempty"`
 	Collector struct {
-		Replicas          int    `yaml:"replicas,omitempty"`
-		Size              string `yaml:"size,omitempty"`
-		ImageRepository   string `yaml:"imageRepository,omitempty"`
-		ImageTag          string `yaml:"imageTag,omitempty"`
-		ImagePullPolicy   string `yaml:"imagePullPolicy,omitempty"`
-		SecretName        string `yaml:"secretName,omitempty"`
-		GroupID           int    `yaml:"groupID,omitempty"`
-		EscalationChainID int    `yaml:"escalationChainID,omitempty"`
-		CollectorVersion  int    `yaml:"collectorVersion,omitempty"`
-		UseEA             bool   `yaml:"useEA,omitempty"`
-		ProxyURL          string `yaml:"proxyURL,omitempty"`
-		ProxyUser         string `yaml:"proxyUser,omitempty"`
-		ProxyPass         string `yaml:"proxyPass,omitempty"`
+		Replicas          intOrString `yaml:"replicas,omitempty"`
+		Size              string      `yaml:"size,omitempty"`
+		ImageRepository   string      `yaml:"imageRepository,omitempty"`
+		ImageTag          string      `yaml:"imageTag,omitempty"`
+		ImagePullPolicy   string      `yaml:"imagePullPolicy,omitempty"`
+		SecretName        string      `yaml:"secretName,omitempty"`
+		GroupID           int         `yaml:"groupID,omitempty"`
+		EscalationChainID intOrString `yaml:"escalationChainID,omitempty"`
+		CollectorVersion  int         `yaml:"collectorVersion,omitempty"`
+		UseEA             bool        `yaml:"useEA,omitempty"`
+		ProxyURL          string      `yaml:"proxyURL,omitempty"`
+		ProxyUser         string      `yaml:"proxyUser,omitempty"`
+		ProxyPass         string      `yaml:"proxyPass,omitempty"`
 		Annotations       struct {
 		} `yaml:"annotations,omitempty"`
 		Labels struct {
@@ -208,7 +233,9 @@ func (oldConf *OldArgusConf) ToNewArgusConf() *NewArgusConf {
 	} else if oldConf.Collector.GroupID != 1 {
 		newConf.Collector.Lm.GroupID = oldConf.Collector.GroupID
 	}
-	newConf.Collector.Lm.EscalationChainID = oldConf.Collector.EscalationChainID
+	if oldConf.Collector.EscalationChainID > 0 {
+		newConf.Collector.Lm.EscalationChainID = int(oldConf.Collector.EscalationChainID)
+	}
 	if oldConf.Collector.ImageRepository != "logicmonitor/collector" {
 		newConf.Collector.Image.Repository = oldConf.Collector.ImageRepository
 	}
@@ -216,8 +243,8 @@ func (oldConf *OldArgusConf) ToNewArgusConf() *NewArgusConf {
 	newConf.Collector.Proxy.User = oldConf.Collector.ProxyUser
 	newConf.Collector.Proxy.Pass = oldConf.Collector.ProxyPass
 
-	if oldConf.Replicas > 1 {
-		newConf.Collector.Replicas = oldConf.Replicas
+	if oldConf.Collector.Replicas > 1 {
+		newConf.Collector.Replicas = int(oldConf.Collector.Replicas)
 	}
 	newConf.Collector.Annotations = oldConf.Collector.Annotations
 	newConf.Collector.Labels = oldConf.Collector.Labels
@@ -226,24 +253,12 @@ func (oldConf *OldArgusConf) ToNewArgusConf() *NewArgusConf {
 	return newConf
 }
 
-func LoadArgusConf(values string) error {
+func UnmarshalArgusConf(values string) (*OldArgusConf, error) {
 	conf := &OldArgusConf{}
 	err := yaml.Unmarshal([]byte(values), conf)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	marshal, err := yaml.Marshal(*conf)
-	if err != nil {
-		return err
-	}
-	fmt.Println(string(marshal))
 
-	newArgusConf := conf.ToNewArgusConf()
-	bytes, err := yaml.Marshal(newArgusConf)
-	if err != nil {
-		return err
-	}
-	fmt.Println("New Argus Config:")
-	fmt.Println(string(bytes))
-	return nil
+	return conf, nil
 }
