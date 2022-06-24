@@ -10,9 +10,7 @@ type Global struct {
 	Account   string `yaml:"account,omitempty" json:"account,omitempty"`
 	Image     struct {
 		Registry   string `yaml:"registry,omitempty" json:"registry,omitempty"`
-		Repository string `yaml:"repository,omitempty" json:"repository,omitempty"`
 		PullPolicy string `yaml:"pullPolicy,omitempty" json:"pullPolicy,omitempty"`
-		Tag        string `yaml:"tag,omitempty" json:"tag,omitempty"`
 	} `yaml:"image,omitempty" json:"image,omitempty"`
 	Proxy struct {
 		URL  string `yaml:"url,omitempty" json:"url,omitempty"`

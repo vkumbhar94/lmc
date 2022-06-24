@@ -3,6 +3,7 @@ package util
 import (
 	"errors"
 	"fmt"
+	"github.com/logrusorgru/aurora/v3"
 	"github.com/spf13/cobra"
 	"github.com/vkumbhar94/lmc/pkg/icon"
 	"gopkg.in/yaml.v2"
@@ -90,19 +91,26 @@ func PrintlnDebugConfig(cmd *cobra.Command, prefix string, out interface{}) {
 	}
 }
 
-func printf(cmd *cobra.Command, msg string, ic icon.Icon) {
-	cmd.Printf("\n%s %s\n", ic, msg)
+func printf(cmd *cobra.Command, msg aurora.Value) {
+	_, err := fmt.Fprint(cmd.OutOrStderr(), msg)
+	if err != nil {
+		return
+	}
+	//cmd.Printf()
+}
+func getMsgWithIcon(msg string, ic icon.Icon) string {
+	return fmt.Sprintf("\n%s %s\n", ic, msg)
 }
 func PrintlnSuccess(cmd *cobra.Command, msg string) {
 	if !Quiet {
-		printf(cmd, msg, icon.SuccessTick)
+		printf(cmd, aurora.Green(getMsgWithIcon(msg, icon.SuccessTick)))
 	}
 }
 func PrintlnFailed(cmd *cobra.Command, msg string) {
-	printf(cmd, msg, icon.FailedCross)
+	printf(cmd, aurora.Red(getMsgWithIcon(msg, icon.FailedCross)))
 }
 func PrintlnRunning(cmd *cobra.Command, msg string) {
 	if !Quiet {
-		printf(cmd, msg, icon.RoundStar)
+		printf(cmd, aurora.Index(151, getMsgWithIcon(msg, icon.RoundStar)).Faint())
 	}
 }
